@@ -1,6 +1,5 @@
-import { getMyDate } from "../../../../commons/libraries/utils";
-import Paginations01 from "../../../commons/paginations/01/Paginations01.container";
-import Searchbars01 from "../../../commons/searchbars/01/Searchbars01.container";
+import Paginations01 from "../../../commons/paginations/Paginations01.container";
+import Searchbars01 from "../../../commons/searchbars/Searchbars01.container";
 import * as S from "./BoardList.styles";
 import { IBoardListUIProps } from "./BoardList.types";
 import { v4 as uuidv4 } from "uuid";
@@ -22,9 +21,6 @@ export default function BoardListUI(props: IBoardListUIProps) {
       </S.Row>
       {props.data?.fetchBoards.map((el) => (
         <S.Row key={el._id}>
-          <S.ColumnBasic>
-            {String(el._id).slice(-4).toUpperCase()}
-          </S.ColumnBasic>
           <S.ColumnTitle id={el._id} onClick={props.onClickMoveToBoardDetail}>
             {el.title
               .replaceAll(props.keyword, `@#$%${props.keyword}@#$%`)
@@ -36,9 +32,9 @@ export default function BoardListUI(props: IBoardListUIProps) {
               ))}
           </S.ColumnTitle>
           <S.ColumnBasic>{el.writer}</S.ColumnBasic>
-          <S.ColumnBasic>{getMyDate(el.createdAt)}</S.ColumnBasic>
-        </S.Row>
-      ))}
+        </S.Row >
+      ))
+      }
       <S.TableBottom />
       <S.Footer>
         <Paginations01
@@ -51,6 +47,6 @@ export default function BoardListUI(props: IBoardListUIProps) {
           게시물 등록하기
         </S.Button>
       </S.Footer>
-    </S.Wrapper>
+    </S.Wrapper >
   );
 }

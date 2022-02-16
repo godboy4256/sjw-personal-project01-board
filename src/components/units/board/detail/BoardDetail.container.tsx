@@ -15,6 +15,7 @@ import {
   IQuery,
   IQueryFetchBoardArgs,
 } from "../../../../commons/types/generated/types";
+import { Modal } from 'antd';
 
 export default function BoardDetail() {
   const router = useRouter();
@@ -39,7 +40,7 @@ export default function BoardDetail() {
   );
 
   const onClickMoveToList = () => {
-    router.push("/boards");
+    router.push("/board");
   };
 
   const onClickMoveToEdit = () => {
@@ -51,8 +52,11 @@ export default function BoardDetail() {
       await deleteBoard({
         variables: { boardId: String(router.query.aaa) },
       });
-      alert("삭제가 완료되었습니다.");
-      router.push(`/boards`);
+      Modal.success({
+        content: '삭제 되었습니다.',
+      });
+
+      router.push(`/board`);
     } catch (error) {
       alert(error.message);
     }

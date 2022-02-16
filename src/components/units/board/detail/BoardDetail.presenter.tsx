@@ -1,7 +1,5 @@
-import { getMyDate } from "../../../../commons/libraries/utils";
 import { IBoardDetailUIProps } from "./BoardDetail.types";
 import * as S from "./BoardDetail.styles";
-import { Tooltip } from "antd";
 
 export default function BoardDetailUI(props: IBoardDetailUIProps) {
   return (
@@ -12,20 +10,8 @@ export default function BoardDetailUI(props: IBoardDetailUIProps) {
             <S.Avatar src="/images/avatar.png" />
             <S.Info>
               <S.Writer>{props.data?.fetchBoard?.writer}</S.Writer>
-              <S.CreatedAt>
-                {getMyDate(props.data?.fetchBoard?.createdAt)}
-              </S.CreatedAt>
             </S.Info>
           </S.AvatarWrapper>
-          <S.IconWrapper>
-            <S.LinkIcon src="/images/board/detail/link.png" />
-            <Tooltip
-              placement="topRight"
-              title={`${props.data?.fetchBoard.boardAddress?.address} ${props.data?.fetchBoard.boardAddress?.addressDetail}`}
-            >
-              <S.LocationIcon src="/images/board/detail/location.png" />
-            </Tooltip>
-          </S.IconWrapper>
         </S.Header>
         <S.Body>
           <S.Title>{props.data?.fetchBoard?.title}</S.Title>

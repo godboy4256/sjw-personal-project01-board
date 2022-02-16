@@ -7,7 +7,7 @@ import {
   IQueryFetchBoardsArgs,
   IQueryFetchBoardsCountArgs,
 } from "../../../../commons/types/generated/types";
-import { useState } from "react";
+import { useState, MouseEvent } from "react";
 
 export default function BoardList() {
   const router = useRouter();
@@ -26,7 +26,8 @@ export default function BoardList() {
   }
 
   function onClickMoveToBoardDetail(event) {
-    router.push(`/boards/${event.target.id}`);
+    console.log(event.currentTarget)
+    router.push(`/boards/${event.currentTarget.id}`);
   }
 
   function onChangeKeyword(value: string) {

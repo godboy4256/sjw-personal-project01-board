@@ -10,16 +10,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const router = useRouter();
 
   const [isActive, setIsActive] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-
   const [myWriter, setMyWriter] = useState("");
   const [myPassword, setMyPassword] = useState("");
   const [myTitle, setMyTitle] = useState("");
   const [myContents, setMyContents] = useState("");
   const [youtubeUrl, setYoutubeUrl] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [address, setAddress] = useState("");
-  const [addressDetail, setAddressDetail] = useState("");
   const [fileUrls, setFileUrls] = useState(["", "", ""]);
 
   const [myWriterError, setMyWriterError] = useState("");
@@ -86,20 +81,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
     setYoutubeUrl(event.target.value);
   };
 
-  const onChangeAddressDetail = (event: ChangeEvent<HTMLInputElement>) => {
-    setAddressDetail(event.target.value);
-  };
-
-  const onClickAddressSearch = () => {
-    setIsOpen(true);
-  };
-
-  const onCompleteAddressSearch = (data: any) => {
-    setAddress(data.address);
-    setZipcode(data.zonecode);
-    setIsOpen(false);
-  };
-
   const onChangeFileUrls = (fileUrl: string, index: number) => {
     const newFileUrls = [...fileUrls];
     newFileUrls[index] = fileUrl;
@@ -134,11 +115,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
               title: myTitle,
               contents: myContents,
               youtubeUrl: youtubeUrl,
-              boardAddress: {
-                zipcode: zipcode,
-                address: address,
-                addressDetail: addressDetail,
-              },
               images: fileUrls,
             },
           },
@@ -159,9 +135,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
       !myTitle &&
       !myContents &&
       !youtubeUrl &&
-      !address &&
-      !addressDetail &&
-      !zipcode &&
       !isChangedFiles
     ) {
       Modal.error({ content: "하나는 입력해야합니다." });
@@ -177,13 +150,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
     if (myTitle) myUpdateBoardInput.title = myTitle;
     if (myContents) myUpdateBoardInput.contents = myContents;
     if (youtubeUrl) myUpdateBoardInput.youtubeUrl = youtubeUrl;
-    if (zipcode || address || addressDetail) {
-      myUpdateBoardInput.boardAddress = {};
-      if (zipcode) myUpdateBoardInput.boardAddress.zipcode = zipcode;
-      if (address) myUpdateBoardInput.boardAddress.address = address;
-      if (addressDetail)
-        myUpdateBoardInput.boardAddress.addressDetail = addressDetail;
-    }
     if (isChangedFiles) myUpdateBoardInput.images = fileUrls;
 
     try {
@@ -221,16 +187,9 @@ export default function BoardWrite(props: IBoardWriteProps) {
       onChangeMyTitle={onChangeMyTitle}
       onChangeMyContents={onChangeMyContents}
       onChangeYoutubeUrl={onChangeYoutubeUrl}
-      onChangeAddressDetail={onChangeAddressDetail}
-      onClickAddressSearch={onClickAddressSearch}
-      onCompleteAddressSearch={onCompleteAddressSearch}
       onChangeFileUrls={onChangeFileUrls}
       onClickSubmit={onClickSubmit}
       onClickUpdate={onClickUpdate}
-      isOpen={isOpen}
-      zipcode={zipcode}
-      address={address}
-      addressDetail={addressDetail}
       fileUrls={fileUrls}
     />
   );

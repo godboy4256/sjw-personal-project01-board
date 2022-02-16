@@ -31,16 +31,9 @@ export interface IBoardWriteUIProps {
   onChangeMyTitle: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeMyContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   onChangeYoutubeUrl: (event: ChangeEvent<HTMLInputElement>) => void;
-  onChangeAddressDetail: (event: ChangeEvent<HTMLInputElement>) => void;
-  onClickAddressSearch: () => void;
-  onCompleteAddressSearch: (data: any) => void;
   onChangeFileUrls: (fileUrls: string, index: number) => void;
   onClickSubmit: () => void;
   onClickUpdate: () => void;
-  isOpen: boolean;
-  zipcode: string;
-  address: string;
-  addressDetail: string;
   fileUrls: string[];
 }
 

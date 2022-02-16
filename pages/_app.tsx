@@ -1,4 +1,3 @@
-// import "../styles/globals.css";
 import "antd/dist/antd.css";
 import {
   ApolloClient,
@@ -11,13 +10,10 @@ import Layout from "../src/components/commons/layout";
 import { Global } from "@emotion/react";
 import { globalStyles } from "../src/commons/styles/globalStyles";
 
-// Import the functions you need from the SDKs you need
+
 import { initializeApp } from "firebase/app";
 import { createUploadLink } from "apollo-upload-client";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDkKksE3jmPd6mQxsfpLTtJ8sNX57cSxUs",
   authDomain: "mysite1234-9ba99.firebaseapp.com",
@@ -27,7 +23,6 @@ const firebaseConfig = {
   appId: "1:486288941499:web:e45ae91f62e2141abea49e",
 };
 
-// Initialize Firebase
 export const firebaseApp = initializeApp(firebaseConfig);
 
 function MyApp({ Component, pageProps }: AppProps) {

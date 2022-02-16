@@ -1,6 +1,4 @@
-import { Modal } from "antd";
-import DaumPostcode from "react-daum-postcode";
-import Uploads01 from "../../../commons/uploads/01/Uploads01.container";
+import Uploads01 from "../../../commons/uploads/Uploads01.container";
 import * as S from "./BoardWrite.styles";
 import { IBoardWriteUIProps } from "./BoardWrite.types";
 import { v4 as uuidv4 } from "uuid";
@@ -8,11 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 export default function BoardWriteUI(props: IBoardWriteUIProps) {
   return (
     <>
-      {props.isOpen && (
-        <Modal visible={true}>
-          <DaumPostcode onComplete={props.onCompleteAddressSearch} />
-        </Modal>
-      )}
       <S.Wrapper>
         <S.Title>{props.isEdit ? "게시판 수정" : "게시판 등록"}</S.Title>
         <S.WriterWrapper>
@@ -57,37 +50,6 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
           <S.Error>{props.myContentsError}</S.Error>
         </S.InputWrapper>
         <S.InputWrapper>
-          <S.Label>주소</S.Label>
-          <S.ZipcodeWrapper>
-            <S.Zipcode
-              placeholder="07250"
-              readOnly
-              value={
-                props.zipcode ||
-                props.data?.fetchBoard.boardAddress?.zipcode ||
-                ""
-              }
-            />
-            <S.SearchButton onClick={props.onClickAddressSearch}>
-              우편번호 검색
-            </S.SearchButton>
-          </S.ZipcodeWrapper>
-          <S.Address
-            readOnly
-            value={
-              props.address ||
-              props.data?.fetchBoard.boardAddress?.address ||
-              ""
-            }
-          />
-          <S.Address
-            onChange={props.onChangeAddressDetail}
-            defaultValue={
-              props.data?.fetchBoard.boardAddress?.addressDetail || ""
-            }
-          />
-        </S.InputWrapper>
-        <S.InputWrapper>
           <S.Label>유튜브</S.Label>
           <S.Youtube
             placeholder="링크를 복사해주세요."
@@ -106,13 +68,6 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
             />
           ))}
         </S.ImageWrapper>
-        <S.OptionWrapper>
-          <S.Label>메인설정</S.Label>
-          <S.RadioButton type="radio" id="youtube" name="radio-button" />
-          <S.RadioLabel htmlFor="youtube">유튜브</S.RadioLabel>
-          <S.RadioButton type="radio" id="image" name="radio-button" />
-          <S.RadioLabel htmlFor="image">사진</S.RadioLabel>
-        </S.OptionWrapper>
         <S.ButtonWrapper>
           <S.SubmitButton
             onClick={props.isEdit ? props.onClickUpdate : props.onClickSubmit}
