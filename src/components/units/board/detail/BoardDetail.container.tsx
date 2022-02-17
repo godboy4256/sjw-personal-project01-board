@@ -55,8 +55,8 @@ export default function BoardDetail() {
       Modal.success({
         content: '삭제 되었습니다.',
       });
-
       router.push(`/board`);
+      
     } catch (error) {
       alert(error.message);
     }
