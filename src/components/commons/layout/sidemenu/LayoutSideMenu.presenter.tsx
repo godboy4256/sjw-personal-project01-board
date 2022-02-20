@@ -1,15 +1,18 @@
+import { SideMenuContainer, SideMenuList } from "./LayoutSideMenu.styles";
+
 export default function LayoutSideMenuUI({
   onClickHome,
   onClickBoard,
   onClickWrite,
-  onClickOpenApi
+  onClickOpenApi,
+  changeHeader
 }) {
   return (
-    <ul>
-      <li onClick={onClickHome}>홈으로</li>
-      <li onClick={onClickBoard}>자유 게시판</li>
-      <li onClick={onClickWrite}>글 작성하기</li>
-      <li onClick={onClickOpenApi}>오픈 API</li>
-    </ul>
+    <SideMenuContainer changeHeader={changeHeader}>
+      <SideMenuList onClick={onClickHome}>Home</SideMenuList>
+      <SideMenuList onClick={onClickBoard}>Board</SideMenuList>
+      <SideMenuList onClick={onClickWrite}>Write</SideMenuList>
+      <SideMenuList onClick={onClickOpenApi}>Video</SideMenuList>
+    </SideMenuContainer>
   );
 }

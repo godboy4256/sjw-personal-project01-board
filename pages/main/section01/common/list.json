@@ -1,0 +1,26 @@
+[
+   {
+    "title": "Any Texts",
+    "contents": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus quam suscipit aliquid, delectus" ,
+    "imgUrl":"images/main/img01.jpg",
+    "imgAlt":"section_contents_01"
+   },
+   {
+    "title": "Any Texts",
+    "contents": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus quam suscipit aliquid, delectus" ,
+    "imgUrl":"images/main/img02.jpg",
+    "imgAlt":"section_contents_02"
+   },
+   {
+    "title": "Any Texts",
+    "contents": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus quam suscipit aliquid, delectus" ,
+    "imgUrl":"images/main/img03.jpg",
+    "imgAlt":"section_contents_03"
+   },
+   {
+    "title": "Any Texts",
+    "contents": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus quam suscipit aliquid, delectus" ,
+    "imgUrl":"images/main/img04.jpg",
+    "imgAlt":"section_contents_04"
+   }
+]

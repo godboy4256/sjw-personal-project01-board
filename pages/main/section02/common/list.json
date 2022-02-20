@@ -1,0 +1,23 @@
+[
+   {
+    "title": "Any Texts",
+    "contents": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia, aperiam animi harum neque debitis beatae dolorum magni in? Modi ullam qui quos debitis rerum! Doloremque voluptates expedita cupiditate impedit tempore." ,
+    "imgUrl":"images/main/img05.jpg",
+    "imgAlt":"section_contents_01",
+    "direction" :"left"
+   },
+   {
+    "title": "Any Texts",
+    "contents": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia, aperiam animi harum neque debitis beatae dolorum magni in? Modi ullam qui quos debitis rerum! Doloremque voluptates expedita cupiditate impedit tempore." ,
+    "imgUrl":"images/main/img06.jpg",
+    "imgAlt":"section_contents_02",
+    "direction" :"right"
+   },
+   {
+    "title": "Any Texts",
+    "contents": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia, aperiam animi harum neque debitis beatae dolorum magni in? Modi ullam qui quos debitis rerum! Doloremque voluptates expedita cupiditate impedit tempore." ,
+    "imgUrl":"images/main/img07.jpg",
+    "imgAlt":"section_contents_03",
+    "direction" :"left"
+   }
+]

@@ -12,19 +12,8 @@ import {
   FETCH_BOARD_COMMENTS,
 } from "./BoardCommentList.queries";
 import {
-  Avatar,
-  Contents,
-  DateString,
-  DeleteIcon,
-  FlexWrapper,
-  ItemWrapper,
-  MainWrapper,
-  WriterWrapper,
-  OptionWrapper,
   Star,
-  UpdateIcon,
-  Writer,
-  PasswordInput,
+  Comments
 } from "./BoardCommentList.styles";
 import { IBoardCommentListUIItemProps } from "./BoardCommentList.types";
 
@@ -78,33 +67,31 @@ export default function BoardCommentListUIItem(
       {isOpenDeleteModal && (
         <Modal visible={true} onOk={onClickDelete}>
           <div>비밀번호 입력: </div>
-          <PasswordInput type="password" onChange={onChangeDeletePassword} />
+          <input type="password" onChange={onChangeDeletePassword} />
         </Modal>
       )}
       {!isEdit && (
-        <ItemWrapper>
-          <FlexWrapper>
-            <Avatar src="/images/avatar.png" />
-            <MainWrapper>
-              <WriterWrapper>
-                <Writer>{props.el?.writer}</Writer>
+        <Comments>
+          <div>
+            <div>
+              <div>
+                <h2>{props.el?.writer}</h2>
                 <Star value={props.el?.rating} disabled />
-              </WriterWrapper>
-              <Contents>{props.el?.contents}</Contents>
-            </MainWrapper>
-            <OptionWrapper>
-              <UpdateIcon
+              </div>
+              <p>{props.el?.contents}</p>
+            </div>
+            <div>
+              <img
                 src="/images/boardComment/list/option_update_icon.png/"
                 onClick={onClickUpdate}
               />
-              <DeleteIcon
+              <img
                 src="/images/boardComment/list/option_delete_icon.png/"
                 onClick={onClickOpenDeleteModal}
               />
-            </OptionWrapper>
-          </FlexWrapper>
-          <DateString>{props.el?.createdAt}</DateString>
-        </ItemWrapper>
+            </div>
+          </div>
+        </Comments>
       )}
       {isEdit && (
         <BoardCommentWrite isEdit={true} setIsEdit={setIsEdit} el={props.el} />

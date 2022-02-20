@@ -1,9 +1,14 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faImage } from "@fortawesome/free-solid-svg-icons"
 import {
   UploadButton,
   UploadFileHidden,
-  UploadImage,
+  UploadImage
 } from "./Uploads01.styles";
 import { IUploads01UIProps } from "./Uploads01.types";
+
+
+
 
 export default function Uploads01UI(props: IUploads01UIProps) {
   return (
@@ -15,8 +20,8 @@ export default function Uploads01UI(props: IUploads01UIProps) {
         />
       ) : (
         <UploadButton onClick={props.onClickUpload}>
-          <>+</>
-          <>Upload</>
+          <span>+</span>
+          <FontAwesomeIcon icon={faImage} />
         </UploadButton>
       )}
       <UploadFileHidden

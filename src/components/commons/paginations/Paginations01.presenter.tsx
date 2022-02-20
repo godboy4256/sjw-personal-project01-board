@@ -1,10 +1,17 @@
-import { Page } from "./Paginations01.styles";
+import {
+  Page,
+  PageContainer,
+  NextButton,
+  PrevButton
+} from "./Paginations01.styles";
 import { IPaginations01UIProps } from "./Paginations01.types";
+
+
 
 export default function Paginations01UI(props: IPaginations01UIProps) {
   return (
-    <div>
-      <Page onClick={props.onClickPrevPage}>{`<`}</Page>
+    <PageContainer>
+      <PrevButton onClick={props.onClickPrevPage}>{`<<`}</PrevButton>
       {new Array(10).fill(1).map(
         (_, index) =>
           props.startPage + index <= props.lastPage && (
@@ -18,7 +25,7 @@ export default function Paginations01UI(props: IPaginations01UIProps) {
             </Page>
           )
       )}
-      <Page onClick={props.onClickNextPage}>{`>`}</Page>
-    </div>
+      <NextButton onClick={props.onClickNextPage}>{`>>`}</NextButton>
+    </PageContainer>
   );
 }

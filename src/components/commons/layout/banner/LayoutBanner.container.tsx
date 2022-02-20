@@ -1,5 +1,7 @@
-import LayoutBannerUI from "./LayoutBanner.presenter";
+import LayoutBannerPresenter from "./LayoutBanner.presenter";
 
-export default function LayoutBanner() {
-  return <LayoutBannerUI />;
+const LayoutBannerContainer = () => {
+  return <LayoutBannerPresenter />;
 }
+
+export default LayoutBannerContainer

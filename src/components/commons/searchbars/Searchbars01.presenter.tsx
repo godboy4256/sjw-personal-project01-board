@@ -1,18 +1,19 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 import {
-  FireFilledIcon,
-  Searchbar,
-  SearchbarInput,
+  SearchBarStyles,
+  SearchBarStylesContainer
 } from "./Searchbars01.styles";
 import { ISearchbars01UIProps } from "./Searchbars01.types";
 
 export default function Searchbars01UI(props: ISearchbars01UIProps) {
   return (
-    <Searchbar>
-      <FireFilledIcon />
-      <SearchbarInput
+    <SearchBarStylesContainer>
+      <FontAwesomeIcon icon={faMagnifyingGlass} />
+      <SearchBarStyles
         placeholder="검색어를 입력해 주세요."
         onChange={props.onChangeSearchbar}
       />
-    </Searchbar>
+    </SearchBarStylesContainer>
   );
 }

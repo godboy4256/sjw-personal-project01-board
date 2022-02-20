@@ -119,7 +119,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
             },
           },
         });
-        router.push(`/boards/${result.data.createBoard._id}`);
+        router.push(`/board/${result.data.createBoard._id}`);
       } catch (error) {
         console.log(error.message);
       }
@@ -161,7 +161,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
         },
       });
       Modal.success({ content: "수정이 완료되었습니다." });
-      router.push(`/boards/${router.query.aaa}`);
+      router.push(`/board/${router.query.aaa}`);
     } catch (error) {
       Modal.error({ content: error.message });
     }

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import LayoutSideMenuUI from "./LayoutSideMenu.presenter";
 
-export default function LayoutSideMenu() {
+export default function LayoutSideMenu({ changeHeader }) {
   const router = useRouter()
 
   const onClickHome = () => router.push('/')
@@ -15,6 +15,7 @@ export default function LayoutSideMenu() {
       onClickBoard={onClickBoard}
       onClickWrite={onClickWrite}
       onClickOpenApi={onClickOpenApi}
+      changeHeader={changeHeader}
     />
   )
 }

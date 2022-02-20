@@ -8,13 +8,21 @@ export const UploadImage = styled.img`
 `;
 
 export const UploadButton = styled.button`
-  width: 78px;
-  height: 78px;
-  background-color: #bdbdbd;
+  background-color: #fca103;
+  border-radius: 10px;
   margin-right: 24px;
+  padding:10px;
   outline: none;
   border: none;
   cursor: pointer;
+  font-size: 30px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  & > span{
+    display: block;
+    margin-right: 5px;
+  }
 `;
 
 export const UploadFileHidden = styled.input`
