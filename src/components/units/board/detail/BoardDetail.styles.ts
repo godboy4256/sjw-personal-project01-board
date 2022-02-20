@@ -13,7 +13,16 @@ export const DetailHeaderWriter = styled.h2`
 `
 
 export const CommentBox = styled.div`
-  width: 30%;
+  width: 100%;
+  background-color: #fff;
+  padding: 30px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  & > div:last-child {
+    max-height: 800px;
+    overflow-y: auto;
+  }
 `
 
 export const HowFill = styled.div`
@@ -49,6 +58,7 @@ export const DetailPostContents = styled.div`
   border:1px solid #ccc;
   padding:30px;
   margin-top: 50px;
+  width: 100%;
 `
 
 
@@ -56,12 +66,28 @@ export const DetailContentsBox = styled.div`
   padding:30px;
   border:1px solid #ccc;
   margin-right: 30px;
+  width: 100%;
+  background-color: #fff;
 `
 
 export const DetailWrapper = styled.div`
   width:100%;
-  background-color:#fff;
   padding:50px;
   display: flex;
+  flex-direction: column;
 `
 
+export const DetailControl = styled.ul`
+  margin-top: 10px;
+  width:100%;
+  background-color: #fff;
+  display: flex;
+  padding:30px;
+  & > li{
+    background-color: #fca103;
+    color: #fff;
+    padding: 5px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+`

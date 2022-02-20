@@ -19,26 +19,24 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
       <WriterWrapper>
         <WriterContainer>
           <div>
-            <div>
-              <label>작성자</label>
-              <input
-                type="text"
-                placeholder="이름을 적어주세요."
-                onChange={props.onChangeMyWriter}
-                defaultValue={props.data?.fetchBoard.writer}
-                readOnly={!!props.data?.fetchBoard.writer}
-              />
-              <div>{props.myWriterError}</div>
-            </div>
-            <div>
-              <label>비밀번호</label>
-              <input
-                type="password"
-                placeholder="비밀번호를 작성해주세요."
-                onChange={props.onChangeMyPassword}
-              />
-              <div>{props.myPasswordError}</div>
-            </div>
+            <label>작성자</label>
+            <input
+              type="text"
+              placeholder="이름을 적어주세요."
+              onChange={props.onChangeMyWriter}
+              defaultValue={props.data?.fetchBoard.writer}
+              readOnly={!!props.data?.fetchBoard.writer}
+            />
+            <div>{props.myWriterError}</div>
+          </div>
+          <div>
+            <label>비밀번호</label>
+            <input
+              type="password"
+              placeholder="비밀번호를 작성해주세요."
+              onChange={props.onChangeMyPassword}
+            />
+            <div>{props.myPasswordError}</div>
           </div>
           <div>
             <label>제목</label>

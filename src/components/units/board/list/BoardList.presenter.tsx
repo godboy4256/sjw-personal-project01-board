@@ -10,8 +10,10 @@ import {
   IndiCator,
   BoardListUuTtileList
 } from './BoardList.styles'
+import { useRouter } from "next/router";
 
 export default function BoardListUI(props: IBoardListUIProps) {
+  const router = useRouter()
   return (
     <BoardListContainerStyles>
       <Searchbars01
@@ -21,7 +23,7 @@ export default function BoardListUI(props: IBoardListUIProps) {
       />
       <BoardListUuTtileList>
         {props.data?.fetchBoards.map((el) => (
-          <BoardListStyles key={el._id}>
+          <BoardListStyles key={el._id} onClick={() => { router.push(`/boards/${el._id}`) }}>
             <BoardListTitleStyles id={el._id} onClick={props.onClickMoveToBoardDetail}>
               {el.title
                 .replaceAll(props.keyword, `@#$%${props.keyword}@#$%`)

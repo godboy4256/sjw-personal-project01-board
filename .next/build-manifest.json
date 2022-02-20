@@ -25,10 +25,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/boards/[aaa]": [
+    "/worldcup": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/boards/[aaa].js"
+      "static/chunks/pages/worldcup.js"
+    ],
+    "/write": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/write.js"
     ]
   },
   "ampFirstPages": []

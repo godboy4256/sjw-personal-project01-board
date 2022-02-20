@@ -13,7 +13,9 @@ import {
 } from "./BoardCommentList.queries";
 import {
   Star,
-  Comments
+  Comments,
+  EditButton,
+  DeleteButton
 } from "./BoardCommentList.styles";
 import { IBoardCommentListUIItemProps } from "./BoardCommentList.types";
 
@@ -35,6 +37,7 @@ export default function BoardCommentListUIItem(
     setIsEdit(true);
   }
 
+
   async function onClickDelete() {
     try {
       await deleteBoardComment({
@@ -45,17 +48,19 @@ export default function BoardCommentListUIItem(
         refetchQueries: [
           {
             query: FETCH_BOARD_COMMENTS,
-            variables: { boardId: router.query.boardId },
+            variables: { boardId: router?.query?.aaa },
           },
         ],
       });
+      setIsOpenDeleteModal(prev => !prev);
+      Modal.success({ content: "삭제 되었습니다." })
     } catch (error) {
       Modal.error({ content: error.message });
     }
   }
 
   function onClickOpenDeleteModal() {
-    setIsOpenDeleteModal(true);
+    setIsOpenDeleteModal(prev => !prev);
   }
 
   function onChangeDeletePassword(event: ChangeEvent<HTMLInputElement>) {
@@ -63,9 +68,9 @@ export default function BoardCommentListUIItem(
   }
 
   return (
-    <>
+    <div>
       {isOpenDeleteModal && (
-        <Modal visible={true} onOk={onClickDelete}>
+        <Modal visible={true} onOk={onClickDelete} onCancel={onClickOpenDeleteModal}>
           <div>비밀번호 입력: </div>
           <input type="password" onChange={onChangeDeletePassword} />
         </Modal>
@@ -75,20 +80,14 @@ export default function BoardCommentListUIItem(
           <div>
             <div>
               <div>
-                <h2>{props.el?.writer}</h2>
+                <h2>{props.el?.contents}</h2>
                 <Star value={props.el?.rating} disabled />
               </div>
-              <p>{props.el?.contents}</p>
+              <p>댓글 작성자 : {props.el?.writer}</p>
             </div>
             <div>
-              <img
-                src="/images/boardComment/list/option_update_icon.png/"
-                onClick={onClickUpdate}
-              />
-              <img
-                src="/images/boardComment/list/option_delete_icon.png/"
-                onClick={onClickOpenDeleteModal}
-              />
+              <EditButton onClick={onClickUpdate}>댓글 수정</EditButton>
+              <DeleteButton onClick={onClickOpenDeleteModal}>댓글 삭제</DeleteButton>
             </div>
           </div>
         </Comments>
@@ -96,6 +95,6 @@ export default function BoardCommentListUIItem(
       {isEdit && (
         <BoardCommentWrite isEdit={true} setIsEdit={setIsEdit} el={props.el} />
       )}
-    </>
+    </div>
   );
 }

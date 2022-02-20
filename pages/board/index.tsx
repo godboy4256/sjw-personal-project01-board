@@ -16,7 +16,7 @@ const Boards = () => {
         setBoardType(prev => !prev)
     ]
     function onClickMoveToBoardNew() {
-        router.push("/boards/new");
+        router.push("/write/");
     }
     return (
         <BoardLayoutContainer>

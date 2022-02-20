@@ -7,14 +7,14 @@ export default function LayoutSideMenu({ changeHeader }) {
   const onClickHome = () => router.push('/')
   const onClickBoard = () => router.push('/board')
   const onClickWrite = () => router.push('/write')
-  const onClickOpenApi = () => router.push('/openapi')
+  const onClickWorldCup = () => router.push('/worldcup')
 
   return (
     <LayoutSideMenuUI
       onClickHome={onClickHome}
       onClickBoard={onClickBoard}
       onClickWrite={onClickWrite}
-      onClickOpenApi={onClickOpenApi}
+      onClickWorldCup={onClickWorldCup}
       changeHeader={changeHeader}
     />
   )

@@ -5,7 +5,9 @@ import InfiniteScroll from "react-infinite-scroller";
 export default function BoardCommentListUI(props: IBoardCommentListUIProps) {
   if (!props.data) return <div />;
   return (
-    <InfiniteScroll pageStart={0} loadMore={props.onLoadMore} hasMore={true}>
+    <InfiniteScroll pageStart={0} loadMore={props.onLoadMore} hasMore={true}
+      style={{ width: "50%" }}
+    >
       {props.data?.fetchBoardComments.map((el) => (
         <BoardCommentListUIItem key={el._id} el={el} />
       ))}

@@ -3,6 +3,8 @@ import {
   CommentStyle,
   CommentRating,
   CommentButton,
+  CommentTitle,
+  WriterInfo,
   Star
 } from "./BoardCommentWrite.styles";
 import { IBoardCommentWriteUIProps } from "./BoardCommentWrite.types";
@@ -12,32 +14,35 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps) {
     <ConmmentContainer>
       {!props.isEdit && (
         <>
-          <span>Comment</span>
+          <CommentTitle>댓글 작성</CommentTitle>
         </>
       )}
       <CommentStyle>
-          <textarea
-            maxLength={100}
-            defaultValue={props.el?.contents}
-            onChange={props.onChangeMyContents}
-            placeholder="개인정보를 공유 및 요청하거나, 명예 훼손, 무단 광고, 불법 정보 유포시 모니터링 후 삭제될 수 있으며, 이에 대한 민형사상 책임은 게시자에게 있습니다."
+        <span>{props.myContents.length}/100</span>
+        <textarea
+          maxLength={100}
+          defaultValue={props.el?.contents}
+          onChange={props.onChangeMyContents}
+          placeholder="개인정보를 공유 및 요청하거나, 명예 훼손, 무단 광고, 불법 정보 유포시 모니터링 후 삭제될 수 있으며, 이에 대한 민형사상 책임은 게시자에게 있습니다."
+        />
+        <WriterInfo>
+          <input
+            placeholder="작성자"
+            readOnly={!!props.el?.writer}
+            defaultValue={props.el?.writer}
+            onChange={props.onChangeMyWriter}
           />
-          <span>{props.myContents.length}/100</span>
+          <input
+            type="password"
+            placeholder="비밀번호"
+            onChange={props.onChangeMyPassword}
+          />
+        </WriterInfo>
         <CommentRating>
-          <h5>별점</h5>
+          <h5>별점을 주세요!</h5>
           <Star onChange={props.onChangeStar} />
         </CommentRating>
-        <input
-          placeholder="작성자"
-          readOnly={!!props.el?.writer}
-          defaultValue={props.el?.writer}
-          onChange={props.onChangeMyWriter}
-        />
-        <input
-          type="password"
-          placeholder="비밀번호"
-          onChange={props.onChangeMyPassword}
-        />
+
       </CommentStyle>
       <div>
         <CommentButton
@@ -46,6 +51,9 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps) {
           {props.isEdit ? "수정하기" : "등록하기"}
         </CommentButton>
       </div>
-    </ConmmentContainer>
+      {
+        props.isEdit && <button onClick={() => { props.setIsEdit(false) }}>취소</button>
+      }
+    </ConmmentContainer >
   );
 }

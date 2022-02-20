@@ -8,7 +8,8 @@ import {
   DetailTitle,
   DetailPostContents,
   HowFill,
-  CommentBox
+  CommentBox,
+  DetailControl
 } from "./BoardDetail.styles";
 import BoardCommentList from "../../boardComment/list/BoardCommentList.container";
 import BoardCommentWrite from "../../boardComment/write/BoardCommentWrite.container";
@@ -61,13 +62,14 @@ export default function BoardDetailUI(props: IBoardDetailUIProps) {
           <BoardCommentWrite />
           <BoardCommentList />
         </CommentBox>
+        <DetailControl>
+          <li onClick={props.onClickMoveToList}>목록으로</li>
+          <li onClick={props.onClickMoveToEdit}>수정하기</li>
+          <li onClick={props.onClickDelete}>삭제하기</li>
+        </DetailControl>
       </DetailWrapper>
 
-      <ul>
-        <li onClick={props.onClickMoveToList}>목록으로</li>
-        <li onClick={props.onClickMoveToEdit}>수정하기</li>
-        <li onClick={props.onClickDelete}>삭제하기</li>
-      </ul>
+
     </DetailContainer>
   );
 }

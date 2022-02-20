@@ -6,7 +6,11 @@ export const Star = styled(Rate)`
 `;
 
 export const ConmmentContainer = styled.div`
-    width: 100%;
+    width: 50%;
+    margin-right: 10px;
+    border-right:1px solid #ccc;
+    padding-right: 30px;
+    margin-right: 30px;
 `;
 
 export const CommentRating = styled.div`
@@ -18,11 +22,19 @@ export const CommentRating = styled.div`
     }
 `;
 
+export const CommentTitle = styled.div`
+  font-size: 30px;
+  text-align: center;
+  padding: 30px 0;
+`
+
+
 export const CommentStyle = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    & > input {
+    & input {
+        width: 49%;
         padding: 5px;
         margin-bottom: 5px;
         outline: none;
@@ -32,7 +44,7 @@ export const CommentStyle = styled.div`
     };
     & textarea {
         resize: none;
-        height: 200px;
+        height: 100px;
         padding: 10px;
         margin-bottom: 10px;
         outline: none;
@@ -42,6 +54,7 @@ export const CommentStyle = styled.div`
 `;
 
 export const CommentButton = styled.div`
+    width: 50%;
     border:none;
     background: none;
     background-color: #fca103;
@@ -50,4 +63,9 @@ export const CommentButton = styled.div`
     text-align: center;
     color: #fff;
     cursor: pointer;
+`
+
+export const WriterInfo = styled.div`
+    display: flex;
+    justify-content: space-between;
 `

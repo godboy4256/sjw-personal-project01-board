@@ -1,4 +1,5 @@
 import { useMutation } from "@apollo/client";
+import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import {
@@ -49,6 +50,7 @@ export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
     setStar(value);
   }
 
+
   async function onClickWrite() {
     try {
       await createBoardComment({
@@ -75,11 +77,11 @@ export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
 
   async function onClickUpdate() {
     if (!myContents) {
-      alert("내용이 수정되지 않았습니다.");
+      Modal.error({ content: "내용이 수정되지 않았습니다." });
       return;
     }
     if (!myPassword) {
-      alert("비밀번호가 입력되지 않았습니다.");
+      Modal.error({ content: "비밀번호가 일치하지 않습니다." });
       return;
     }
 
@@ -104,8 +106,9 @@ export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
         ],
       });
       props.setIsEdit(false);
+      Modal.success({ content: "수정 되었습니다." })
     } catch (error) {
-      alert(error.message);
+      Modal.error({ content: "비밀번호가 일치하지 않습니다." });
     }
   }
 
@@ -117,6 +120,7 @@ export default function BoardCommentWrite(props: IBoardCommentWriteProps) {
       onChangeStar={onChangeStar}
       onClickWrite={onClickWrite}
       onClickUpdate={onClickUpdate}
+      setIsEdit={props.setIsEdit}
       isEdit={props.isEdit}
       el={props.el}
       myContents={myContents}

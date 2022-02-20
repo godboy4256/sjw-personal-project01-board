@@ -17,6 +17,7 @@ export interface IBoardCommentWriteUIProps {
   isEdit?: boolean;
   el?: IBoardComment;
   myContents: string;
+  setIsEdit: any
 }
 
 export interface IUpdateBoardCommentInput {
