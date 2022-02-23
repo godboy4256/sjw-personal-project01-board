@@ -5,6 +5,7 @@ export default function LayoutSideMenuUI({
   onClickBoard,
   onClickWrite,
   onClickWorldCup,
+  onClickMarket,
   changeHeader
 }) {
   return (
@@ -12,7 +13,8 @@ export default function LayoutSideMenuUI({
       <SideMenuList onClick={onClickHome}>Home</SideMenuList>
       <SideMenuList onClick={onClickBoard}>Board</SideMenuList>
       <SideMenuList onClick={onClickWrite}>Write</SideMenuList>
-      <SideMenuList onClick={onClickWorldCup}>World Cup</SideMenuList>
+      {/* <SideMenuList onClick={onClickWorldCup}>World Cup</SideMenuList> */}
+      <SideMenuList onClick={onClickMarket}>Market</SideMenuList>
     </SideMenuContainer>
   );
 }
