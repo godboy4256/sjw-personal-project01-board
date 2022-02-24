@@ -1,6 +1,9 @@
 import { useRouter } from "next/router";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { v4 as uuidv4 } from "uuid";
+import { Modal } from "antd";
+import BuyComment from "../../buyComment";
+
 
 const FETCH_BOARD_ITEM = gql`
     query fetchUseditem($useditemId:ID!){
@@ -12,10 +15,25 @@ const FETCH_BOARD_ITEM = gql`
             remarks
             images
             seller{
+                _id
                 name
                 picture
             }
         }
+    }
+`
+
+const FETCH_USER_LOGGED_IN = gql`
+  query fetchUserLoggedIn {
+    fetchUserLoggedIn {
+      _id
+    }
+  }
+`;
+
+const DELETE_USED_ITEM = gql`
+    mutation deleteUseditem($useditemId:ID!){
+        deleteUseditem(useditemId:$useditemId)
     }
 `
 
@@ -27,8 +45,43 @@ const DetailPage = () => {
         }
     })
 
+    const { data: userId } = useQuery(FETCH_USER_LOGGED_IN)
+    const [deleteUsedItem] = useMutation(DELETE_USED_ITEM)
+    const onClickDeleteItem = async () => {
+        try {
+            const result = await deleteUsedItem({
+                variables: {
+                    useditemId: router?.query?.detail
+                }
+            })
+            Modal.success({ content: "삭제 완료" });
+            router.push('/market')
+        } catch (error) {
+            Modal.error({ content: error.message });
+        }
+    }
+
+    const onClickEditItem = () => {
+        if (data?.fetchUseditem?.seller._id !== userId?.fetchUserLoggedIn?._id) {
+            Modal.error({ content: "수정 권한이 있는 없는 상품입니다." })
+            return;
+        } else {
+            router.push({
+                pathname: '/sellPage',
+                query: {
+                    edit: true,
+                    itemId: router?.query?.detail
+                }
+            })
+        }
+    }
+
+    const onClickList = () => {
+        router.push('/market')
+    }
+
     return (
-        <div>
+        <div style={{ paddingTop: "500px" }}>
             <h2>{data?.fetchUseditem?.name}</h2>
             <div>{data?.fetchUseditem?.price}</div>
             <div>{data?.fetchUseditem?.contents}</div>
@@ -47,11 +100,12 @@ const DetailPage = () => {
                 }
             </ul>
             <ul>
-                <button>상품 수정하기</button>
-                <button>상품 삭제하기</button>
-                <button>상품 목록으로</button>
+                <button onClick={onClickEditItem}>상품 수정하기</button>
+                <button onClick={onClickDeleteItem}>상품 삭제하기</button>
+                <button onClick={onClickList}>상품 목록으로</button>
             </ul>
             <button>구입하기</button>
+            <BuyComment itemId={router?.query?.detail} />
         </div>
     );
 };

@@ -11,6 +11,7 @@ const FETCH_USER_LOGGED_IN = gql`
     fetchUserLoggedIn {
       email
       name
+      _id
     }
   }
 `;
@@ -40,7 +41,7 @@ const LayoutUserStatePresenter = ({ changeHeader }) => {
     return (
         <UserStateStyles changeHeader={changeHeader}>
             <div>
-                {data && <div>
+                {inOut && <div>
                     <span>
                         {data?.fetchUserLoggedIn.name}
                     </span>
