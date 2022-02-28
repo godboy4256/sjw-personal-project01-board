@@ -15,4 +15,10 @@ export const UserStateStyles = styled.nav`
         color: ${((props: any) => props.changeHeader ? "#000" : "#fff")};
         cursor: pointer;
     }
+    & .user__color{
+        color: #fca103;
+    }
+    & .white{
+        color: ${((props: any) => props.changeHeader ? "#000" : "#fff")};;
+    }
 `

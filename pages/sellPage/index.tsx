@@ -86,7 +86,6 @@ const SellPage = () => {
 
 
     const onClickSubmit = async (data: FormValues) => {
-        console.log(data)
         try {
             const result = await createUseditem({
                 variables: {
@@ -129,9 +128,9 @@ const SellPage = () => {
         }
     };
 
-
     const router = useRouter()
     console.log(router?.query?.edit)
+
     return (
         <SellPageContainer>
             <h2>{router?.query?.edit ? "상품 수정" : "상품 등록"}</h2>

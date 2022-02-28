@@ -1,7 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
-import { GlobalContext } from '../../../../../pages/_app';
+import { useEffect, useState } from 'react';
 import { IQuery } from '../../../../commons/types/generated/types';
 import MyMenu from '../../myMenu';
 import { UserStateStyles } from './LayoutUserState.styles'
@@ -40,21 +39,19 @@ const LayoutUserStatePresenter = ({ changeHeader }) => {
     }, [])
     return (
         <UserStateStyles changeHeader={changeHeader}>
-            <div>
-                {inOut && <div>
-                    <span>
-                        {data?.fetchUserLoggedIn.name}
-                    </span>
-                    <span>님 환영합니다.</span>
-                </div>}
-            </div>
             <ul>
                 {inOut ? <li onClick={onLogout}>로그아웃</li> : <li onClick={onLogin}>로그인</li>}
                 <li onClick={onSignUp}>회원가입</li>
-                <li onClick={onMyPage}>
-                    <span>My 메뉴</span>
-                    {onMyMenu && <MyMenu />}
+                <li>
+                    {inOut && <div className='white'>
+                        <span className='user__color'>
+                            {data?.fetchUserLoggedIn.name}
+                        </span>
+                        <span> 님 환영합니다.</span>
+
+                    </div>}
                 </li>
+                <li>My Point : 0</li>
             </ul>
         </UserStateStyles>
     );

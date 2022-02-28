@@ -3,6 +3,18 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { v4 as uuidv4 } from "uuid";
 import { Modal } from "antd";
 import BuyComment from "../../buyComment";
+import { useState } from "react";
+import Payment from "../../../src/components/commons/payment";
+import {
+    DetailBuyContainer,
+    DetailBuyWrapper,
+    DatailLeft,
+    DatailRight,
+    DetailTop,
+    DetailControl,
+    BuyBtn
+} from "../component/styles";
+
 
 
 const FETCH_BOARD_ITEM = gql`
@@ -27,6 +39,7 @@ const FETCH_USER_LOGGED_IN = gql`
   query fetchUserLoggedIn {
     fetchUserLoggedIn {
       _id
+      name
     }
   }
 `;
@@ -47,6 +60,7 @@ const DetailPage = () => {
 
     const { data: userId } = useQuery(FETCH_USER_LOGGED_IN)
     const [deleteUsedItem] = useMutation(DELETE_USED_ITEM)
+    const [onPay, setOnPay] = useState(false)
     const onClickDeleteItem = async () => {
         try {
             const result = await deleteUsedItem({
@@ -80,33 +94,71 @@ const DetailPage = () => {
         router.push('/market')
     }
 
+
+    const onPaySystem = () => {
+        setOnPay(prev => !prev)
+    }
+
     return (
-        <div style={{ paddingTop: "500px" }}>
-            <h2>{data?.fetchUseditem?.name}</h2>
-            <div>{data?.fetchUseditem?.price}</div>
-            <div>{data?.fetchUseditem?.contents}</div>
-            <div>{data?.fetchUseditem?.remarks}</div>
-            <div>{data?.fetchUseditem?.seller?.name}</div>
-            <ul>
-                {
-                    data?.fetchUseditem?.images.map((el, index) => {
-                        return <li key={uuidv4()}>
-                            {el !== ""
-                                && el.includes("file-storage")
-                                && (el.includes('jpg') || el.includes('png') || el.includes('jpeg'))
-                                && <img src={`https://storage.googleapis.com/${el}`} alt={el.name + String(index)} />}
-                        </li>
-                    })
-                }
-            </ul>
-            <ul>
-                <button onClick={onClickEditItem}>상품 수정하기</button>
-                <button onClick={onClickDeleteItem}>상품 삭제하기</button>
-                <button onClick={onClickList}>상품 목록으로</button>
-            </ul>
-            <button>구입하기</button>
-            <BuyComment itemId={router?.query?.detail} />
-        </div>
+        <DetailBuyContainer>
+            <DetailBuyWrapper>
+                <DetailTop>
+                    <DatailLeft>
+                        <ul>
+                            {
+                                data?.fetchUseditem?.images.filter(item => item).length > 0 ?
+                                    data?.fetchUseditem?.images.filter(item => item).map((el, index) => {
+                                        return <li key={uuidv4()}>
+                                            {el !== ""
+                                                && el.includes("file-storage")
+                                                && (el.includes('jpg') || el.includes('png') || el.includes('jpeg'))
+                                                && <img src={`https://storage.googleapis.com/${el}`} alt={el.name + String(index)} />}
+                                        </li>
+                                    }) : <li>
+                                        <img src="/images/detail/gm_noimage.png" alt="해당 상품은 이미지가 없습니다." />
+                                    </li>
+                            }
+                        </ul>
+                        {
+                            onPay &&
+                            <Payment
+                                sellName={data?.fetchUseditem?.name}
+                                sellPrice={data?.fetchUseditem?.price}
+                                buyName={userId?.fetchUserLoggedIn?._id}
+                                setOnPay={setOnPay}
+                            />
+                        }
+                    </DatailLeft>
+                    <DatailRight>
+                        <h2>{data?.fetchUseditem?.name}</h2>
+                        <div className="price">
+                            <h3>상품 가격</h3>
+                            <span>{data?.fetchUseditem?.price}</span> 원
+                        </div>
+                        <div className="contents">
+                            <h3>상품 설명</h3>
+                            <div>{data?.fetchUseditem?.contents}</div>
+                        </div>
+                        <div className="remarks">
+                            <h3>비고</h3>
+                            <div>{data?.fetchUseditem?.remarks}</div>
+                        </div>
+                        <div className="seller__name"><span>{data?.fetchUseditem?.seller?.name}</span> 님이 판매하는 상품입니다.</div>
+                        <DetailControl>
+                            <div>
+                                <button onClick={onClickEditItem}>상품 수정하기</button>
+                                <button onClick={onClickDeleteItem}>상품 삭제하기</button>
+                                <button onClick={onClickList}>상품 목록으로</button>
+                            </div>
+                            <div className="ref__text">* 다른 사용자가 업로드 한 상품을 임의로 수정/삭제 할 수 없습니다.</div>
+                        </DetailControl>
+                        <BuyBtn onClick={onPaySystem}>$ {data?.fetchUseditem?.price}원에 구입하기</BuyBtn>
+                    </DatailRight>
+                </DetailTop>
+                <BuyComment itemId={router?.query?.detail} />
+            </DetailBuyWrapper>
+        </DetailBuyContainer>
+
     );
 };
 

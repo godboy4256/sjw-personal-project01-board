@@ -40,10 +40,16 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const [accessToken, setAccessToken] = useState("");
   const [userInfo, setUserInfo] = useState<IUserInfo>({});
+  const [viewToday, setViewToday] = useState(false)
+  const [todayList, setTodayList] = useState([])
 
   const value = {
     accessToken,
-    setAccessToken
+    setAccessToken,
+    setViewToday,
+    viewToday,
+    todayList,
+    setTodayList
   };
 
   useEffect(() => {

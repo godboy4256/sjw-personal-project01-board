@@ -8,7 +8,7 @@ export const LayoutHeaderStyles = styled.header`
     flex-direction: column;
     top:0;
     left:0;
-    z-index: 1;
+    z-index: 2;
     transition: .4s;
     & > div{
         width: 100%;

@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import Question from "./component";
 import { v4 as uuidv4 } from "uuid";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { Modal } from "antd";
+import { BuyQuestionContainer } from "./styles";
 
 const CREATE_USED_ITEM_QUESTION = gql`
     mutation createUseditemQuestion($createUseditemQuestionInput:CreateUseditemQuestionInput!,$useditemId:ID!){
@@ -21,6 +22,7 @@ const FETCH_USED_ITEM_QUESTIONS = gql`
         }
   }
 `
+
 
 
 const BuyComment = ({ itemId }) => {
@@ -58,9 +60,10 @@ const BuyComment = ({ itemId }) => {
 
 
     return (
-        <div>
+        <BuyQuestionContainer>
+            <h3>질문</h3>
             <form onSubmit={onQuesTion}>
-                <input ref={refQues} type="text" placeholder="댓글을 입력해주세요" />
+                <input className="ques" ref={refQues} type="text" placeholder="질문 혹은 리뷰를 입력해주세요" />
                 <button>댓글 달기</button>
             </form>
             {
@@ -68,7 +71,7 @@ const BuyComment = ({ itemId }) => {
                     return <Question key={uuidv4()} ques={el} />
                 })
             }
-        </div>
+        </BuyQuestionContainer>
     );
 };
 

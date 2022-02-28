@@ -25,10 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/detailbuy/[detail]": [
+    "/boards/[aaa]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/detailbuy/[detail].js"
+      "static/chunks/pages/boards/[aaa].js"
     ],
     "/market": [
       "static/chunks/webpack.js",

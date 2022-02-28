@@ -1,9 +1,24 @@
 import { gql, useQuery } from "@apollo/client";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { IQuery, IQueryFetchBoardArgs, IQueryFetchBoardsCountArgs } from "../../src/commons/types/generated/types";
-import { MouseEvent } from 'recat'
+import { GlobalContext } from "../_app";
+import {
+    MarketContainer,
+    MarketItemList,
+    MarketItem,
+    MarkerHeader,
+    MarketPagination,
+    MarketWrapper,
+    MarketMenu,
+    MarketImageBox,
+    MarketInfo,
+    PageColor
+} from "./styles";
+
 
 const FETCH_USED_ITEMS = gql`
     query fetchUseditems($page:Int){
@@ -31,10 +46,10 @@ const FETCH_USED_ITEMS = gql`
 
 
 const Market = () => {
+    const { todaylist, setTodayList } = useContext(GlobalContext)
     const router = useRouter()
     const [startPage, setStartPage] = useState(1);
     const [activedPage, setActivedPage] = useState(1);
-    // const lastPage = count ? Math.ceil(count / 10) : 0;
     const [keyword, setKeyword] = useState("");
     useEffect(() => {
         setActivedPage(1);
@@ -44,11 +59,6 @@ const Market = () => {
         Pick<IQuery, "fetchBoards">,
         IQueryFetchBoardArgs
     >(FETCH_USED_ITEMS);
-
-    // const { data: count, refetch: refetchBoardsCount } = useQuery<
-    //     Pick<IQuery, "fetchBoardsCount">,
-    //     IQueryFetchBoardsCountArgs
-    // >(FETCH_BOARDS_COUNT);
 
     const goSellPage = () => {
         router.push('/sellPage')
@@ -65,66 +75,74 @@ const Market = () => {
         refetch({ page: activedPage });
     };
 
-    // const onClickPrevPage = () => {
-    //     if (startPage <= 1) return;
-    //     setStartPage((prev) => prev - 10);
-    //     refetch({ page: startPage });
-    //     setActivedPage(startPage - 10);
-    // };
-
-    // const onClickNextPage = () => {
-    //     if (startPage + 10 > lastPage) return;
-    //     setStartPage((prev) => prev + 10);
-    //     refetch({ page: startPage });
-    //     setActivedPage(startPage + 10);
-    // };
-
     return (
-        <div style={{ paddingTop: "300px" }}>
-            <ul>
-                {
-                    data?.fetchUseditems?.map(el => {
-                        return <li key={uuidv4()}>
-                            <div>판매 물품 : {el.name}</div>
-                            <div>판매자 : {el.seller.name}</div>
-                            <div>가격 : {el.price}</div>
-                            <div>
-                            </div>
-                            {
-                                el.images.length > 0 && el.images.map((it, index) => {
-                                    return (
-                                        it !== ""
-                                        && it.includes("file-storage")
-                                        && (it.includes('jpg') || it.includes('png') || it.includes('jpeg'))
-                                        && <img key={uuidv4()} src={`https://storage.googleapis.com/${it}`} alt={el.name + String(index)} />
-                                    )
-                                })
-                            }
-                            <button onClick={goBuy(el._id)}>구매하기</button>
-                            <hr />
-                        </li>
-                    })
-                }
-            </ul>
-            <ul>
-                {/* <li onClick={onClickPrevPage}>{`<<`}</li> */}
-                {new Array(10).fill(1).map(
-                    (_, index) =>
-                    (
-                        <li
-                            key={uuidv4()}
-                            onClick={onClickPage}
-                            id={String(index + startPage)}
-                        //  isActive={startPage + index === activedPage}
-                        >
-                            {index + startPage}
-                        </li>
-                    )
-                )}
-                {/* <li onClick={onClickNextPage}>{`>>`}</li> */}
-            </ul>
-            <button onClick={goSellPage}>상품 판매하기</button>
-        </div>
+        <MarketContainer>
+            <MarkerHeader>
+                <h1>Zoo Masters</h1>
+                <strong>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio illo nostrum natus possimus minus ab fuga atque qui non? Voluptas ipsum eligendi tenetur libero? Laboriosam e
+                    aque quam beatae voluptatum cupiditate.
+                </strong>
+            </ MarkerHeader>
+            <MarketMenu>
+                <li>List</li>
+                <li>Today</li>
+                <li>My Buy</li>
+                <li>Sell</li>
+            </MarketMenu>
+            <MarketWrapper>
+                <h2>상품 리스트</h2>
+                <MarketItemList>
+                    {
+                        data?.fetchUseditems?.map(el => {
+                            return <MarketItem key={uuidv4()}>
+                                <MarketImageBox>
+                                    {
+                                        el.images.length > 0 && el.images.map((it, index) => {
+                                            return (
+                                                it !== ""
+                                                && it.includes("file-storage")
+                                                && (it.includes('jpg') || it.includes('png') || it.includes('jpeg'))
+                                                && <img key={uuidv4()} src={`https://storage.googleapis.com/${it}`} alt={el.name + String(index)} />
+                                            )
+                                        })
+                                    }
+                                </MarketImageBox>
+                                <MarketInfo>
+                                    <h3>{el.name}</h3>
+                                    <div><span>{el.price}</span>$</div>
+                                    <button onClick={goBuy(el._id)}>
+                                        <span>
+                                            사러가기
+                                        </span>
+                                        <span className="arrow-icon">
+                                            <FontAwesomeIcon icon={faArrowRight} />
+                                        </span>
+                                    </button>
+                                    <h4><span>{el.seller.name ? el.seller.name : "익명"}</span> 님이 판매하고 있는 상품입니다.</h4>
+                                </MarketInfo>
+                            </MarketItem>
+                        })
+                    }
+                </MarketItemList>
+                <MarketPagination>
+                    {new Array(10).fill(1).map(
+                        (_, index) =>
+                        (
+                            <PageColor
+                                key={uuidv4()}
+                                onClick={onClickPage}
+                                id={String(index + startPage)}
+                                isActive={startPage + index === activedPage}
+                            >
+                                {index + startPage}
+                            </PageColor>
+                        )
+                    )}
+                </MarketPagination>
+                <button onClick={goSellPage}>상품 판매하기</button>
+            </MarketWrapper>
+        </MarketContainer >
     );
 };
 
