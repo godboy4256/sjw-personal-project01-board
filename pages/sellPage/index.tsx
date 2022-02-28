@@ -1,6 +1,14 @@
 import { useForm } from "react-hook-form";
 import dynamic from 'next/dynamic';
-import { SellPageContainer } from "./styles";
+import {
+    SellPageContainer,
+    SellPageTitle,
+    SellForm,
+    SellButton,
+    SellImgbox,
+    SellPageWrapper,
+    SellControl
+} from "./styles";
 import { v4 as uuidv4 } from "uuid";
 
 const ReactQuill = dynamic(() => import('react-quill'), {
@@ -133,41 +141,53 @@ const SellPage = () => {
 
     return (
         <SellPageContainer>
-            <h2>{router?.query?.edit ? "상품 수정" : "상품 등록"}</h2>
-            <form onSubmit={router?.query?.edit ? handleSubmit(onClickSubmitEdit) : handleSubmit(onClickSubmit)}>
-                상품명: <input type="text" {...register("name")} autoComplete="off" /><br />
-                물품 이미지 : <input type="file" onChange={onChangeFileUpload} /><br />
-                <ReactQuill onChange={handleChange} />
-                <br />
-                가격 : <input type="text" {...register("price")} autoComplete="off" /><br />
-                비고 : <input type="text" {...register("remarks")} autoComplete="off" />
-                <button>{router?.query?.edit ? "상품 수정" : "상품 등록"}</button>
-            </form>
-            <div>
-                <h4>태그 추가하기</h4>
-                <input ref={refTag} type="text"></input>
-                <button onClick={onClickTag}>태그 추가</button>
-                {
-                    tags.length > 0 && <ul>
-                        {
-                            tags.map(el => {
-                                return <li key={uuidv4()}>{el}</li>
-                            })
+            <SellPageWrapper>
+                <SellPageTitle>{router?.query?.edit ? "상품 수정" : "상품 등록"}</SellPageTitle>
+                <SellForm onSubmit={router?.query?.edit ? handleSubmit(onClickSubmitEdit) : handleSubmit(onClickSubmit)}>
+                    <div className="top__two">
+                        <div>
+                            <label>상품명</label>
+                            <input type="text" {...register("name")} autoComplete="off" placeholder="상품명을 입력해주세요." />
+                        </div>
+                        <div>
+                            <label>가격</label>
+                            <input type="text" {...register("price")} autoComplete="off" placeholder="상품의 가격을 입력해주세요." />
+                        </div>
+                    </div>
+                    <div>
+                        <h4>물품 이미지</h4>
+                        <label id="file_img_label" htmlFor="file_img">이미지 추가하기 +</label>
+                        <input id="file_img" type="file" onChange={onChangeFileUpload} />
+                        {images.length > 0 &&
+                            <SellImgbox>
+                                <h3>이미지 미리보기</h3>
+                                <div>
+                                    {images.map(img => {
+                                        return <div key={uuidv4()}>
+                                            <img src={`https://storage.googleapis.com/${img}`} />
+                                        </div>
+                                    })}
+                                </div>
+                            </SellImgbox>
                         }
-                    </ul>
-                }
-            </div>
-            {images.length > 0 &&
-                <div>
-                    <h3>이미지 미리보기</h3>
-                    {images.map(img => {
-                        return <li key={uuidv4()}>
-                            <img src={`https://storage.googleapis.com/${img}`} />
-                        </li>
-                    })}
-                </div>
-            }
-        </SellPageContainer>
+                    </div>
+                    <div>
+                        <h4>상품에 대한 설명</h4>
+                        <ReactQuill onChange={handleChange} placeholder="상품에 대한 설명을 입력해주세요." />
+                    </div>
+
+                    <div>
+                        <label>비고</label>
+                        <input type="text" {...register("remarks")} autoComplete="off" placeholder="비고" />
+                    </div>
+                    <br />
+                    <SellControl>
+                        <SellButton>{router?.query?.edit ? "상품 수정" : "상품 등록"}</SellButton>
+                        <SellButton onClick={() => router.push('/market')}>{router?.query?.edit ? "수정 취소" : "등록 취소"}</SellButton>
+                    </SellControl>
+                </SellForm>
+            </SellPageWrapper>
+        </SellPageContainer >
     );
 };
 

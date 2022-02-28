@@ -145,3 +145,14 @@ export const MarketMenu = styled.ul`
         cursor: pointer;
     }
 `
+
+export const GoSellPageButton = styled.button`
+    background-color: #fca103;
+    color: #fff;
+    font-size: 17px;
+    padding: 10px 30px;
+    border-radius: 30px;
+    margin-bottom: 30px;
+    cursor: pointer;
+`
+
