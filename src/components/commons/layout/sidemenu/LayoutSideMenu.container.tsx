@@ -7,7 +7,7 @@ export default function LayoutSideMenu({ changeHeader }) {
   const onClickHome = () => router.push('/')
   const onClickBoard = () => router.push('/board')
   const onClickAbout = () => router.push('/about')
-  const onClickWorldCup = () => router.push('/worldcup')
+  const onClickZoo = () => router.push('/zoos')
   const onClickMarket = () => router.push('/market')
 
   return (
@@ -15,8 +15,8 @@ export default function LayoutSideMenu({ changeHeader }) {
       onClickHome={onClickHome}
       onClickBoard={onClickBoard}
       onClickAbout={onClickAbout}
-      onClickWorldCup={onClickWorldCup}
       onClickMarket={onClickMarket}
+      onClickZoo={onClickZoo}
       changeHeader={changeHeader}
     />
   )
