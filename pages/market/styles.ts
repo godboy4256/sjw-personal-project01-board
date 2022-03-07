@@ -19,9 +19,12 @@ export const MarketItemList = styled.ul`
 `
 
 export const MarketItem = styled.li`
-    width: 30%;
+    width: 33%;
     border: 1px solid #ccc;
     margin-bottom: 50px;
+    &.full_width{
+        width:49%
+    }
     & img {
         display: none;
     }
@@ -88,6 +91,7 @@ export const MarketInfo = styled.div`
         color: #fff;
         padding: 5px 20px;
         cursor: pointer;
+        margin-right: 20px;
         margin-bottom: 20px;
         & .arrow-icon{
             margin-left: 10px;

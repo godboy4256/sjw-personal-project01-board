@@ -27,6 +27,7 @@ const firebaseConfig = {
 
 import { createContext, useEffect, useState } from "react";
 import { getAccessToken } from "../src/components/commons/getAccessToken";
+import { FETCH_BOARD } from "../src/components/units/board/detail/BoardDetail.queries";
 export const GlobalContext = createContext({});
 export const firebaseApp = initializeApp(firebaseConfig);
 
@@ -42,6 +43,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [userInfo, setUserInfo] = useState<IUserInfo>({});
   const [viewToday, setViewToday] = useState(false)
   const [todayList, setTodayList] = useState([])
+  const [point, setPoint] = useState(0);
 
   const value = {
     accessToken,
@@ -49,7 +51,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     setViewToday,
     viewToday,
     todayList,
-    setTodayList
+    setTodayList,
+    userInfo,
+    point,
+    setPoint
   };
 
   useEffect(() => {

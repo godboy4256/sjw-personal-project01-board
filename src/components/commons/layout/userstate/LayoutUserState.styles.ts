@@ -21,4 +21,14 @@ export const UserStateStyles = styled.nav`
     & .white{
         color: ${((props: any) => props.changeHeader ? "#000" : "#fff")};;
     }
+    & .charge {
+        background-color: #fca103;
+        color: #fff;
+        padding:0 5px;
+        margin-left:10px;
+        border-radius: 5px;
+    }
+    & .point {
+        color: #fca103;
+    }
 `

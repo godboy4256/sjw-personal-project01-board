@@ -14,6 +14,7 @@ import {
     DetailControl,
     BuyBtn
 } from "../component/styles";
+import { IMutation, IMutationCreatePointTransactionOfBuyingAndSellingArgs } from "../../../src/commons/types/generated/types";
 
 
 
@@ -49,6 +50,14 @@ const DELETE_USED_ITEM = gql`
         deleteUseditem(useditemId:$useditemId)
     }
 `
+
+const CREATE_POINT_TRANSACTION_OF_BUYING_AND_SELLING = gql`
+  mutation createPointTransactionOfBuyingAndSelling($useritemId: ID!) {
+    createPointTransactionOfBuyingAndSelling(useritemId: $useritemId) {
+      _id
+    }
+  }
+`;
 
 const DetailPage = () => {
     const router = useRouter()
@@ -99,6 +108,33 @@ const DetailPage = () => {
         setOnPay(prev => !prev)
     }
 
+    const [createPointTransactionOfBuyingAndSelling] = useMutation<
+        Pick<IMutation, "createPointTransactionOfBuyingAndSelling">,
+        IMutationCreatePointTransactionOfBuyingAndSellingArgs
+    >(CREATE_POINT_TRANSACTION_OF_BUYING_AND_SELLING);
+
+    const onClickBuyItem = (_id: string) => async () => {
+        try {
+            await createPointTransactionOfBuyingAndSelling({
+                variables: {
+                    useritemId: _id,
+                },
+            });
+            alert("구매를 성공하였습니다.");
+            window.location.reload()
+        } catch (error) {
+            if (error instanceof Error) alert("구매를 실패하였습니다.");
+        }
+    };
+
+    const [itemInfo, setItemInfo] = useState({
+        _id: data?.fetchUseditem._id || "",
+        name: data?.fetchUseditem.name || "",
+        remarks: data?.fetchUseditem.remarks || "",
+        contents: data?.fetchUseditem.contents || "",
+        price: data?.fetchUseditem.price || 0,
+        pickedCount: data?.fetchUseditem.pickedCount || 0,
+    });
     return (
         <DetailBuyContainer>
             <DetailBuyWrapper>
@@ -152,7 +188,8 @@ const DetailPage = () => {
                             </div>
                             <div className="ref__text">* 다른 사용자가 업로드 한 상품을 임의로 수정/삭제 할 수 없습니다.</div>
                         </DetailControl>
-                        <BuyBtn onClick={onPaySystem}>$ {data?.fetchUseditem?.price}원에 구입하기</BuyBtn>
+                        {/* <BuyBtn onClick={onPaySystem}>$ {data?.fetchUseditem?.price}원에 구입하기</BuyBtn> */}
+                        <BuyBtn onClick={onClickBuyItem(router?.query?.detail)}>$ {data?.fetchUseditem?.price}원에 구입하기</BuyBtn>
                     </DatailRight>
                 </DetailTop>
                 <BuyComment itemId={router?.query?.detail} />

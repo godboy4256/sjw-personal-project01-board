@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { IQuery, IQueryFetchBoardArgs } from "../../src/commons/types/generated/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import { gql, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 
 import {
     MarketItemList,
@@ -17,20 +17,7 @@ import {
     PageColor,
     GoSellPageButton
 } from "../styles";
-
-
-const FETCH_USED_ITEM = gql`
-    query fetchUseditem($useditemId:ID!){
-        fetchUseditem(useditemId:$useditemId){
-            name
-            _id
-            price
-            contents
-            images
-            seller{name}
-        }
-    }
-`
+import { Modal } from "antd";
 
 const FETCH_USED_ITEMS = gql`
     query fetchUseditems($page:Int){
@@ -49,8 +36,35 @@ const FETCH_USED_ITEMS = gql`
 }
 `
 
+const FETCH_USEDITEMS_IPICKED = gql`
+    query fetchUseditemsIPicked($search: String, $page: Int) {
+        fetchUseditemsIPicked(search: $search, page: $page) {
+        _id
+        name
+        price
+        seller{name}
+        images
+        }
+    }
+`;
+
+const TOGGLE_USED_ITEM_PICK = gql`
+   mutation toggleUseditemPick($useditemId:ID!) {
+    toggleUseditemPick(useditemId:$useditemId)
+   }
+`
+
+
 
 const MarketList = () => {
+    const [todaySeaList, setTodaySeaList] = useState([])
+    useEffect(() => {
+        if (localStorage.getItem("today")) {
+            setTodaySeaList(JSON.parse(localStorage.getItem("today")))
+        } else {
+            localStorage.setItem("today", JSON.stringify(todaySeaList))
+        }
+    }, [])
     const [keyword, setKeyword] = useState("");
     useEffect(() => {
         setActivedPage(1);
@@ -60,7 +74,6 @@ const MarketList = () => {
         Pick<IQuery, "fetchBoards">,
         IQueryFetchBoardArgs
     >(FETCH_USED_ITEMS);
-    const [todaySeaList, setTodaySeaList] = useState([])
     const { todaylist, setTodayList } = useContext(GlobalContext)
     const router = useRouter()
     const [startPage, setStartPage] = useState(1);
@@ -69,15 +82,30 @@ const MarketList = () => {
         router.push('/sellPage')
     }
 
-    const goBuy = (id: string, name, price, images) => (event: MouseEvent<HTMLDivElement>) => {
+    const goBuy = (id: string, name, price, images, seller) => (event: MouseEvent<HTMLDivElement>) => {
         router.push(`/detailbuy/${id}`)
         const addTodayItem = {
             id,
             name,
             price,
-            images
+            images,
+            seller
         }
-        localStorage.setItem("today", addTodayItem)
+        const todayStorageData = [...todaySeaList, addTodayItem]
+        localStorage.setItem("today", JSON.stringify(todayStorageData))
+    };
+
+    const [toggleUseditemPick] = useMutation(TOGGLE_USED_ITEM_PICK)
+    const PickItem = (id: string) => async (event: MouseEvent<HTMLDivElement>) => {
+        const result = await toggleUseditemPick({
+            variables: {
+                useditemId: id
+            }
+        })
+        Modal.success({
+            content: "상품을 찜 했습니다."
+        })
+        window.location.reload()
     };
 
     const onClickPage = (event: MouseEvent<HTMLSpanElement>) => {
@@ -87,6 +115,7 @@ const MarketList = () => {
         refetch({ page: activedPage });
     };
     return (
+
         <MarketWrapper>
             <h2>상품 리스트</h2>
             <GoSellPageButton onClick={goSellPage}>나의 상품 판매하기</GoSellPageButton>
@@ -109,7 +138,7 @@ const MarketList = () => {
                             <MarketInfo>
                                 <h3>{el.name}</h3>
                                 <div><span>{el.price}</span>$</div>
-                                <button onClick={goBuy(el._id, el.name, el.price, el.images)}>
+                                <button onClick={goBuy(el._id, el.name, el.price, el.images, el.seller.name)}>
                                     <span>
                                         사러가기
                                     </span>
@@ -118,6 +147,7 @@ const MarketList = () => {
                                     </span>
                                 </button>
                                 <h4><span>{el.seller.name ? el.seller.name : "익명"}</span> 님이 판매하고 있는 상품입니다.</h4>
+                                <button onClick={PickItem(el._id)}>찜하기</button>
                             </MarketInfo>
                         </MarketItem>
                     })
